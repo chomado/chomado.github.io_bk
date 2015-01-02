@@ -20,6 +20,7 @@ window.onload = function() {
 		bear.addEventListener('enterframe', function() {
 			this.x += 5;
 			this.frame = this.age % 3;
+			this.scale(1.005, 1.005);
 			if (this.x > 320) this.x = 0;
 		});
 		core.rootScene.addChild(bear);
