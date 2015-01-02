@@ -9,19 +9,18 @@ enchant();
 window.onload = function() {
 	
 	var core = new Core(1280, 640);
-	core.preload('image/chomado.jpg');
+	core.preload('image/chara1.png');
 	core.fps = 15;
 	core.onload = function() {
-		var bear = new Sprite(256, 256);
-		bear.image = core.assets['image/chomado.jpg'];
+		var bear = new Sprite(32, 32);
+		bear.image = core.assets['image/chara1.png'];
 		bear.x = 0;
 		bear.y = 0;
-
+		bear.frame = 1;
 		bear.addEventListener('enterframe', function() {
-			this.x += 10;
+			this.x += 5;
+			this.frame = this.age % 3;
 			if (this.x > 320) this.x = 0;
-			this.rotate(2);
-			this.scale(1.01, 1.01);
 		});
 		core.rootScene.addChild(bear);
 	}
