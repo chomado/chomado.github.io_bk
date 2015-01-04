@@ -30,6 +30,16 @@ window.onload = function() {
 				this.y += 5;
 			
 		});
+		var label = new Label();
+		label.x = 300;
+		label.y = 0;
+		label.color = 'red';
+		label.font = '13pt "Arial"';
+		label.text = '0';
+		label.on('enterframe', function () {
+			label.text = (core.frame / core.fps).toFixed(2);
+		});
+
 		icon.on('touchstart', function() {
 			core.rootScene.removeChild(this);
 		});
@@ -38,6 +48,7 @@ window.onload = function() {
 			icon.y = e.y;
 		});
 
+		core.rootScene.addChild(label);
 		core.rootScene.addChild(icon);
 	}
 	core.start();
