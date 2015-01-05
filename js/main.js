@@ -36,7 +36,7 @@ window.onload = function()
 		initialize: function (frameNumber, point) { 
 			Sprite.call(this, 32, 32);
 			this.x = rand(SCREEN_WIDTH - 96);
-			this.y = rand(SCREEN_HEIGHT - 96);
+			this.y = rand(SCREEN_HEIGHT - 32);
 			this.frame = frameNumber;
 			this.image = core.assets['image/chara1.png'];
  
