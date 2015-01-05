@@ -1,55 +1,76 @@
 enchant();
-
-window.onload = function() {
-	
-	// 画面サイズ決定
-	var core = new Core(1024, 1024);
-	
+ 
+var SCREEN_WIDTH = 320;
+var SCREEN_HEIGHT = 320;
+ 
+window.onload = function() 
+{
+ 
+	var core = new Core(SCREEN_WIDTH, SCREEN_HEIGHT);
 	core.preload('image/chara1.png');
-	
-	// fps = frame per second
 	core.fps = 15;
-
+ 
+	// score
+	var score = 0;
+	var scoreLabel = new Label('Score: 0');
+	scoreLabel.x = 200;
+	scoreLabel.y = 5;
+ 
+	// time_limit
+	var timeLeft = 10 * core.fps;
+	var timeLabel = new Label('Time: ?');
+	timeLabel.x = 5;
+	timeLabel.y = 5;
+	core.on('enterframe', function() {
+		timeLeft--;
+		timeLabel.text = 'Time: ' + timeLeft;
+ 
+		if (timeLeft < 0) {
+			alert('Your score: ' + score);
+			this.stop();
+		}
+	});
+ 
+	// Charaクラス : new Chara(どのアイコン画像, 触れた時にいくつ増減するか)
+	var Chara = Class.create(Sprite, {
+		initialize: function (frameNumber, point) { 
+			Sprite.call(this, 32, 32);
+			this.x = rand(SCREEN_WIDTH - 20);
+			this.y = rand(SCREEN_HEIGHT - 20);
+			this.frame = frameNumber;
+			this.image = core.assets['image/chara1.png'];
+ 
+			this.on('touchstart', function() {
+				score += point;
+				scoreLabel.text = 'Score: ' + score;
+				this.x = rand(SCREEN_WIDTH);
+				this.y = rand(SCREEN_HEIGHT);
+			});
+			core.rootScene.addChild(this);
+		}
+	});
+ 
+	// main
 	core.onload = function() {
-		// 動かす画像の大きさ
-		var icon = new Sprite(32, 32);
-		icon.image = core.assets['image/chara1.png'];
-		
-		// 初期位置座標
-		icon.x = 0;
-		icon.y = 0;
-
-		icon.addEventListener('enterframe', function() {
-			if (core.input.left)
-				this.x -= 5;
-			if (core.input.right)
-				this.x += 5;
-			if (core.input.up)
-				this.y -= 5;
-			if (core.input.down)
-				this.y += 5;
-			
+		var girl = new Chara(12, 3);
+ 
+		var enemies = [];
+		for (var i = 0; i < 9; i++) {
+			enemies[i] = new Chara(i, -2);
+		}
+ 
+		girl.on('touchstart', function() {
+			for (var i = 0; i < enemies.length; i++) {
+				enemies[i].x = rand(SCREEN_WIDTH);
+				enemies[i].y = rand(SCREEN_HEIGHT);
+			}
 		});
-		var label = new Label();
-		label.x = 300;
-		label.y = 0;
-		label.color = 'red';
-		label.font = '13pt "Arial"';
-		label.text = '0';
-		label.on('enterframe', function () {
-			label.text = (core.frame / core.fps).toFixed(2);
-		});
-
-		icon.on('touchstart', function() {
-			core.rootScene.removeChild(this);
-		});
-		core.rootScene.on('touchstart', function(e) {
-			icon.x = e.x;
-			icon.y = e.y;
-		});
-
-		core.rootScene.addChild(label);
-		core.rootScene.addChild(icon);
+ 
+		core.rootScene.addChild(scoreLabel);
+		core.rootScene.addChild(timeLabel);
 	}
 	core.start();
-};
+}
+function rand(n) {
+	return Math.floor(Math.random() * (n + 1));
+}
