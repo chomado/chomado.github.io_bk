@@ -61,8 +61,8 @@ window.onload = function()
  
 		girl.on('touchstart', function() {
 			for (var i = 0; i < enemies.length; i++) {
-				enemies[i].x = rand(SCREEN_WIDTH);
-				enemies[i].y = rand(SCREEN_HEIGHT);
+				enemies[i].x = rand(SCREEN_WIDTH -32);
+				enemies[i].y = rand(SCREEN_HEIGHT -32);
 			}
 		});
  
