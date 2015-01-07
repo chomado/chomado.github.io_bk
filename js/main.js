@@ -43,8 +43,8 @@ window.onload = function()
 			this.on('touchstart', function() {
 				score += point;
 				scoreLabel.text = 'Score: ' + score;
-				this.x = rand(SCREEN_WIDTH);
-				this.y = rand(SCREEN_HEIGHT);
+				this.x = rand(SCREEN_WIDTH - 32);
+				this.y = rand(SCREEN_HEIGHT - 32);
 			});
 			core.rootScene.addChild(this);
 		}
