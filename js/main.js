@@ -40,7 +40,8 @@ window.onload = function()
 		initialize: function (frameNumber, point) { 
 			Sprite.call(this, CHARACTER_WIDTH, CHARACTER_HEIGHT);
 			var pos = random_position();
-			[this.x, this.y] = [pos.x, pos.y];
+			this.x = pos.x;
+			this.y = pos.y;
 			this.frame = frameNumber;
 			this.image = core.assets['image/chara1.png'];
  
