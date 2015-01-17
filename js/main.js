@@ -49,7 +49,8 @@ window.onload = function()
 				score += point;
 				scoreLabel.text = 'Score: ' + score;
 				var pos = random_position();
-				[this.x, this.y] = [pos.x, pos.y];
+				this.x = pos.x;
+				this.y = pos.y;
 			});
 			core.rootScene.addChild(this);
 		}
