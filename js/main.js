@@ -2,10 +2,14 @@ enchant();
  
 var SCREEN_WIDTH = 320;
 var SCREEN_HEIGHT = 320;
+var CHARACTER_WIDTH = 32;
+var CHARACTER_HEIGHT = 32;
  
 window.onload = function() 
 {
- 
+	var random_position = function () {
+		return { x: rand(SCREEN_WIDTH - CHARACTER_WIDTH), y: rand(SCREEN_HEIGHT - CHARACTER_HEIGHT) };
+	}; 
 	var core = new Core(SCREEN_WIDTH, SCREEN_HEIGHT);
 	core.preload('image/chara1.png');
 	core.fps = 15;
@@ -34,17 +38,17 @@ window.onload = function()
 	// Charaクラス : new Chara(どのアイコン画像, 触れた時にいくつ増減するか)
 	var Chara = Class.create(Sprite, {
 		initialize: function (frameNumber, point) { 
-			Sprite.call(this, 32, 32);
-			this.x = rand(SCREEN_WIDTH - 96);
-			this.y = rand(SCREEN_HEIGHT - 32);
+			Sprite.call(this, CHARACTER_WIDTH, CHARACTER_HEIGHT);
+			var pos = random_position();
+			[this.x, this.y] = [pos.x, pos.y];
 			this.frame = frameNumber;
 			this.image = core.assets['image/chara1.png'];
  
 			this.on('touchstart', function() {
 				score += point;
 				scoreLabel.text = 'Score: ' + score;
-				this.x = rand(SCREEN_WIDTH - 32);
-				this.y = rand(SCREEN_HEIGHT - 32);
+				var pos = random_position();
+				[this.x, this.y] = [pos.x, pos.y];
 			});
 			core.rootScene.addChild(this);
 		}
@@ -61,8 +65,8 @@ window.onload = function()
  
 		girl.on('touchstart', function() {
 			for (var i = 0; i < enemies.length; i++) {
-				enemies[i].x = rand(SCREEN_WIDTH -32);
-				enemies[i].y = rand(SCREEN_HEIGHT -32);
+				var pos = random_position();
+				[enemies[i].x, enemies[i].y] = [pos.x, pos.y];
 			}
 		});
  
