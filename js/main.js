@@ -68,7 +68,8 @@ window.onload = function()
 		girl.on('touchstart', function() {
 			for (var i = 0; i < enemies.length; i++) {
 				var pos = random_position();
-				[enemies[i].x, enemies[i].y] = [pos.x, pos.y];
+				enemies[i].x = pos.x;
+				enemies[i].y = pos.y;
 			}
 		});
  
